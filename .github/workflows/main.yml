@@ -27,7 +27,7 @@ jobs:
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
-            dirs+=($d)
+            dirs+=("$d")
           done
           printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
           echo "dirs[@]: ${dirs[@]}"
