@@ -22,7 +22,6 @@ jobs:
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-          run: echo "${{ steps.files.outputs.all }}" >> $CHANGED_FILES
       
       - id: set-dirs
         run: |
@@ -34,7 +33,7 @@ jobs:
           echo "dirs[@]: ${dirs[@]}"
           echo "dirs_json: ${dirs_json}"
           echo "::set-output name=dirs::${dirs_json}"
-          echo "$CHANGED_FILES"
+          echo "changed files: ${{ steps.files.outputs.all }}"
 
   artifacts:
     needs: [ setup ]
