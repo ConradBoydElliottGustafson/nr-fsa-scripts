@@ -17,35 +17,40 @@ jobs:
       dirs: ${{ steps.set-dirs.outputs.dirs }}
     steps:
       - uses: actions/checkout@v2
+    
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+          run: echo "${{ steps.files.outputs.all }}" >> $CHANGED_FILES
       
-      - name: List the directories in scripts
-        id: set-dirs
+      - id: set-dirs
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
-            echo "$d"
             dirs+=($d)
           done
           printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
           echo "dirs[@]: ${dirs[@]}"
           echo "dirs_json: ${dirs_json}"
           echo "::set-output name=dirs::${dirs_json}"
+          echo "$CHANGED_FILES"
 
   artifacts:
-      needs: [ setup ]
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          dir: ${{fromJson(needs.setup.outputs.dirs)}}
-          
-      steps:
-        - uses: actions/checkout@v2
+    needs: [ setup ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir: ${{fromJson(needs.setup.outputs.dirs)}}
 
-        - uses: actions/upload-artifact@v3
-          with:
-            name: ${{ matrix.dir }}
-            path: ${{ matrix.dir }}
-          
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.dir }}
+          path: ${{ matrix.dir }}
+
 
   
 
