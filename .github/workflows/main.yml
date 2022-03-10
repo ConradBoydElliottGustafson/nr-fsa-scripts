@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: zipscripts
 
 # Controls when the workflow will run
 on:
@@ -24,6 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
+      run: |
+      for d in scripts/*/ ; do
+          echo "$d"
+      done
 
       - uses: actions/upload-artifact@v3
         with:
