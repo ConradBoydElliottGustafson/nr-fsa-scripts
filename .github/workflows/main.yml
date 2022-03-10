@@ -24,13 +24,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: jitterbit/get-changed-files@v1
 
-      run: |
-      for d in scripts/*/ ; do
-          echo "$d"
-      done
+      - name: List the directories in scripts
+        run: |
+          for d in scripts/*/ ; do
+            echo "$d"
+          done
 
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
           path: scripts/change1
+          
+      
