@@ -14,41 +14,37 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      dirs: ${{ steps.set-dirs.outputs.dirs }}
     steps:
       - uses: actions/checkout@v2
       
       - name: List the directories in scripts
-        id: set-matrix
+        id: set-dirs
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
             echo "$d"
             dirs+=($d)
           done
-          printf -v dirs_d '%s\n' "${dirs[@]}" | jq -R . | jq -s .
-          # printf -v dirs_d ',\"%s\"' "${dirs[@]}"
-          # dirs_d=${ids_d:1} 
+          printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
           echo "dirs[@]: ${dirs[@]}"
-          echo "dirs_d: ${dirs_d}"
-          echo "::set-output name=matrix::{\"dir\":[${dirs_d}]}"
+          echo "dirs_json: ${dirs_json}"
+          echo "::set-output name=dirs::${dirs_json}"
 
   artifacts:
       needs: [ setup ]
       runs-on: ubuntu-latest
       strategy:
         matrix:
-          value: ${{fromJson(needs.setup.outputs.matrix)}}
-
-      # Steps represent a sequence of tasks that will be executed as part of the job
+          dir: ${{fromJson(needs.setup.outputs.dirs)}}
+          
       steps:
-        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         - uses: actions/checkout@v2
 
         - uses: actions/upload-artifact@v3
           with:
-            name: ${{ matrix.value }}
-            path: ${{ matrix.value }}
+            name: ${{ matrix.dir }}
+            path: ${{ matrix.dir }}
           
 
   
