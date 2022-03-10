@@ -22,8 +22,7 @@ jobs:
     
     strategy:
       matrix:
-        name: ['change1', 'change2']
-        path: ['scripts/change1', 'scripts/change2']
+        dir: ['change1', 'change2']
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -32,8 +31,8 @@ jobs:
           
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.name }}
-          path: ${{ matrix.path }}
+          name: ${{ matrix.dir }}
+          path: scripts/${{ matrix.dir }}
 
 
           
