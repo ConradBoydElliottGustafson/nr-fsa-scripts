@@ -19,23 +19,21 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    
+    strategy:
+      matrix:
+        name: ['change1', 'change2']
+        path: ['scripts/change1', 'scripts/change2']
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # - uses: jitterbit/get-changed-files@v1
-
-      - name: List the directories in scripts
-        run: |
-          for d in scripts/*/ ; do
-            echo "$d"
-          done
           
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: scripts/change1/
+          name: ${{ matrix.name }}
+          path: ${{ matrix.path }}
 
 
           
