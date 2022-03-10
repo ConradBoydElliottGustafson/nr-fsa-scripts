@@ -30,6 +30,7 @@ jobs:
             dirs+=("$d")
           done
           printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
+          echo "toJSON(dirs): ${toJSON(dirs)}"
           echo "dirs[@]: ${dirs[@]}"
           echo "dirs_json: ${dirs_json}"
           echo "::set-output name=dirs::${dirs_json}"
