@@ -10,12 +10,6 @@ on:
 
 jobs:
 
-  - name: List the directories in scripts
-    run: |
-      for d in scripts/*/ ; do
-        echo "$d"
-      done
-
   # Identify the list of folders that need to be packaged into artifacts
   setup:
     runs-on: ubuntu-latest
@@ -34,9 +28,6 @@ jobs:
           done
           echo "::set-output name=matrix::[${test_array[@]}]"
           
-  #    - id: set-matrix
-  #      run: echo "::set-output name=matrix::[\"change1\", \"change2\"]"
-
   build:
     needs: [ setup ]
     runs-on: ubuntu-latest
