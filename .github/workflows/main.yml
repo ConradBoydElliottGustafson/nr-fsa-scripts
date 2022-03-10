@@ -24,9 +24,9 @@ jobs:
           declare -a dirs
           for d in scripts/*/ ; do
             echo "$d"
-            dirs+=d
+            dirs+=(d)
           done
-          printf -v dirs_d ',\"%s\"' "${dirs[@]}"
+          printf -v dirs_d ',\"%s\"' "${dirs[*]}"
           dirs_d=${ids_d:1}   
           echo "dirs: ${dirs_d}"
           echo "::set-output name=matrix::{\"dir\":[${dirs_d}]}"
