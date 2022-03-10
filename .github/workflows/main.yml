@@ -21,17 +21,15 @@ jobs:
       - name: List the directories in scripts
         id: set-matrix
         run: |
-          # dirs=()
           declare -a dirs
           for d in scripts/*/ ; do
             echo "$d"
             dirs+=($d)
           done
 
-          printf -v dirs_d ',\"%s\"' "${dirs[*]}"
-          dirs_d=${ids_d:1} 
-          echo "dirs: ${dirs}"
-          echo "dirs[*]: ${dirs[*]}"
+          printf -v dirs_d '%s\n' "${X[@]}" | jq -R . | jq -s
+          # printf -v dirs_d ',\"%s\"' "${dirs[@]}"
+          # dirs_d=${ids_d:1} 
           echo "dirs[@]: ${dirs[@]}"
           echo "dirs_d: ${dirs_d}"
           echo "::set-output name=matrix::{\"dir\":[${dirs_d}]}"
