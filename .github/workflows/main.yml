@@ -14,21 +14,20 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - id: matrix
-        run: |
-          echo '::set-output name=value::[\"change1\", \"change2\"]'
+      - id: set-matrix
+        # run: echo '::set-output name=matrix::[\"change1\", \"change2\"]'
+        run: echo "::set-output name=matrix::{\"dir\":[\"change1\", \"change2\"]}"
 
   build:
     needs: [ setup ]
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        value: ${{fromJson(needs.setup.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.setup.outputs.matrix)}}
     steps:
       - run: |
-          echo "${{ matrix.value }}"
+          echo "${{ matrix.dir }}"
   
 
 
