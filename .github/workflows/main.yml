@@ -21,11 +21,7 @@ jobs:
       - name: List the directories in scripts
         id: set-matrix
         run: |
-          declare -a dirs
-          for d in scripts/*/ ; do
-            echo "$d"
-            dirs+=(d)
-          done
+          dirs=("scripts/change1/" "scripts/change2")
           printf -v dirs_d ',\"%s\"' "${dirs[*]}"
           dirs_d=${ids_d:1}   
           echo "dirs: ${dirs_d}"
