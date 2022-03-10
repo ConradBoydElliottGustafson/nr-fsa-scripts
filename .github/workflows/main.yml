@@ -26,7 +26,10 @@ jobs:
             echo "$d"
             test_array+=($d)
           done
-          echo "::set-output name=matrix::[${test_array[@]}]"
+          printf -v dirs_d ',\"%s\"' "${dirs[@]}"
+          dirs_d=${ids_d:1}   
+          echo "$dirs_d"
+          echo "::set-output name=matrix::{\"dir\":[${dirs_d}]}"
           
   build:
     needs: [ setup ]
