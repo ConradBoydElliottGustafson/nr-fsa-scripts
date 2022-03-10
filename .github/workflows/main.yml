@@ -24,7 +24,7 @@ jobs:
           declare -a dirs
           for d in scripts/*/ ; do
             echo "$d"
-            dirs+=($d)
+            dirs+=d
           done
           printf -v dirs_d ',\"%s\"' "${dirs[@]}"
           dirs_d=${ids_d:1}   
