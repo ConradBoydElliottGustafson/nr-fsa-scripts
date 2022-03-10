@@ -24,7 +24,8 @@ jobs:
           dirs=("scripts/change1/" "scripts/change2")
           printf -v dirs_d ',\"%s\"' "${dirs[*]}"
           dirs_d=${ids_d:1}   
-          echo "dirs: ${dirs_d}"
+          echo "dirs: ${dirs}"
+          echo "dirs_d: ${dirs_d}"
           echo "::set-output name=matrix::{\"dir\":[${dirs_d}]}"
       
       - run: echo ${{ steps.set-matrix.outputs.matrix }}
