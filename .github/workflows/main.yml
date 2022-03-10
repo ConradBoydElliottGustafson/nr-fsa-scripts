@@ -26,16 +26,10 @@ jobs:
     strategy:
       matrix:
         value: ${{fromJson(needs.setup.outputs.matrix)}}
-      
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-          
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.value }}
-          path: scripts/${{ matrix.value }}
+      - run: |
+          echo "${{ matrix.value }}"
+  
 
 
           
