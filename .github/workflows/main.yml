@@ -29,11 +29,4 @@ jobs:
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          echo "${dirs[@]}" >> $DIRS
-          # printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
-          echo "env.DIRS ${env.DIRS}"
-          echo "toJSON(env.DIRS): ${{toJSON(env.DIRS)}}"
-          echo "dirs[@]: ${dirs[@]}"
-          # echo "dirs_json: ${dirs_json}"
-          # echo "::set-output name=dirs::${dirs_json}"
-          echo "changed files: ${{ steps.files.outputs.all }}"
+          echo "::set-output name=dirs::${{toJSON(dirs)}}"
