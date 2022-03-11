@@ -25,10 +25,10 @@ jobs:
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s .)
+          dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s . | tr -d '\r\n')
           echo "dirs_json: ${dirs_json}"
-          dirs_json="[\"scripts/change1/\",\n\"scripts/change2/\"]}"
-          echo "dirs_json: ${dirs_json}"
+          # dirs_json="[\"scripts/change1/\",\n\"scripts/change2/\"]}"
+          # echo "dirs_json: ${dirs_json}"
           echo "::set-output name=dirs::${dirs_json}"
           
   artifacts:
