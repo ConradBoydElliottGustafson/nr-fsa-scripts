@@ -50,8 +50,8 @@ jobs:
             echo "No changes to scripts directories."
             exit 0
           fi
-          echo '::set-output name=create_artifact::true'
-          echo '::set-output name=path::${dirs[0]}'
+          echo "::set-output name=create_artifact::true"
+          echo "::set-output name=path::${dirs[0]}"
           
       - uses: actions/upload-artifact@v3
         if: ${{ steps.set-dir.outputs.create_artifact }}
