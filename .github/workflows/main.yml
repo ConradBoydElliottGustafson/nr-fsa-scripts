@@ -26,8 +26,9 @@ jobs:
           done
           dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s .)
           echo "dirs_json: ${dirs_json}"
+          dirs_json="[\"scripts/change1/\",\"scripts/change2/\"]}"
+          echo "dirs_json: ${dirs_json}"
           # echo "::set-output name=dirs::${dirs_json}"
-          echo "::set-output name=dirs::[\"scripts/change1/\", \"scripts/change2/\"]}"
           
   artifacts:
     needs: [ setup ]
