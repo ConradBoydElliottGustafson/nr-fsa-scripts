@@ -23,15 +23,13 @@ jobs:
         with:
           format: 'csv'
           
-      - id: compute-dirs
+      - id: set-dirs
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          echo "artifact_dirs=${dirs[@]}" >> $GITHUB_ENV
-      
-      - id: set-dirs
-        run: |
-          echo "${{toJSON(env.artifact_dirs)}}"
-          echo "::set-output name=dirs::${{toJSON(env.artifact_dirs)}}"
+          printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
+          echo "dirs[@]: ${dirs[@]}"
+          echo "dirs_json: ${dirs_json}"
+          echo "::set-output name=dirs::${dirs_json}"
