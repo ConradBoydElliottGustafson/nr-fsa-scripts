@@ -52,6 +52,8 @@ jobs:
           fi
           echo "::set-output name=create_artifact::true"
           echo "::set-output name=path::${dirs[0]}"
+          echo "create_artifact: ${{ steps.set-dir.outputs.create_artifact }}"
+          echo "path: ${{ steps.set-dir.outputs.path }}"
           
       - uses: actions/upload-artifact@v3
         if: ${{ steps.set-dir.outputs.create_artifact }}
