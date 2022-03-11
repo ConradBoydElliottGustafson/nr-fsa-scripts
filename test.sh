@@ -1,10 +1,20 @@
 #!/bin/bash
 
+set -eux
 declare -a dirs
 for d in scripts/*/ ; do
-dirs+=("$d")
+    # if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
+    # then
+        dirs+=("$d")
+    # fi
 done
-dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s . | tr -d '\r\n')
-echo -e "dirs_json: ${dirs_json}"
-# dirs_json="[\n\t\"scripts/change1/\",\n\t\"scripts/change2/\"\n]"
-# echo "dirs_json: ${dirs_json}"
+if [ ${#dirs[@]} -gt 1 ];
+then
+    echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directory changes."
+    exit 1
+fi
+if [ ${#dirs[@]} -eq 0 ];
+then
+    echo "No changes to scripts directories."
+    exit 0
+fi
