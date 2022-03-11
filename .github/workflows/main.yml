@@ -29,4 +29,4 @@ jobs:
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          echo "::set-output name=dirs::${{toJSON(dirs)}}"
+          echo "::set-output name=dirs::${{toJSON(${dirs})}}"
