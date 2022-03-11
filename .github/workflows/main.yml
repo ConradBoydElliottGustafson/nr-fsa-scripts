@@ -24,7 +24,8 @@ jobs:
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
-          echo "dirs[@]: ${dirs[@]}"
-          echo "dirs_json: ${dirs_json}"
-          echo "::set-output name=dirs::${dirs_json}"
+          printf '%s\n' "${dirs[@]}" | jq -R . | jq -s .
+          # printf -v dirs_json '%s\n' "${dirs[@]}" | jq -R . | jq -s .
+          # echo "dirs[@]: ${dirs[@]}"
+          # echo "dirs_json: ${dirs_json}"
+          # echo "::set-output name=dirs::${dirs_json}"
