@@ -22,11 +22,16 @@ jobs:
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-      
-      - id: set-dirs
+          
+      - id: compute-dirs
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
             dirs+=("$d")
           done
-          echo "::set-output name=dirs::${{toJSON(${dirs})}}"
+          echo "artifact_dirs=${dirs}" >> $GITHUB_ENV
+      
+      - id: set-dirs
+        run: |
+          echo "${{toJSON(env.artifact_dirs)}}"
+          echo "::set-output name=dirs::${{toJSON(env.artifact_dirs)}}"
