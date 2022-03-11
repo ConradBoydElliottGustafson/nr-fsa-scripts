@@ -34,7 +34,7 @@ jobs:
         run: |
           set -eux
           echo "::set-output name=create_artifact::false"
-          echo "::set-output name=path::scripts:
+          echo "::set-output name=path::scripts"
           declare -a dirs=()
           for d in scripts/*/ ; do
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
