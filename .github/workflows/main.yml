@@ -35,13 +35,12 @@ jobs:
                 dirs+=("$d")
             fi
           done
-          numDirs=${#dirs[@]}
-          if [ numDirs -gt 1 ];
+          if [ ${#dirs[@]} -gt 1 ];
           then
             echo "You may not change more than 1 directory in a single PR. This one has ${numDirs} directory changes."
             exit 1
           fi
-          if [ numDirs -eq 0 ];
+          if [ ${#dirs[@]} -eq 0 ];
           then
             echo "No changes to scripts directories."
             exit 0
