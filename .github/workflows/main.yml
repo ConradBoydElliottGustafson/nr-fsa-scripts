@@ -32,7 +32,7 @@ jobs:
         name: Calculate directories to turn into artifacts
         run: |
           set -eux
-          declare -a dirs
+          declare -a dirs=()
           for d in scripts/*/ ; do
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
             then
