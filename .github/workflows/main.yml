@@ -29,7 +29,10 @@ jobs:
         run: |
           declare -a dirs
           for d in scripts/*/ ; do
-            dirs+=("$d")
+            if [ ${d} = *"${{ steps.files.outputs.all }}"* ];
+            then
+                dirs+=("$d")
+            fi
           done
           dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s . | tr -d '\r\n')
           echo "dirs_json: ${dirs_json}"
