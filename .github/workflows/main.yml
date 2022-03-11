@@ -14,12 +14,12 @@ on:
 
 jobs:
 
-  # Identify the list of folders that need to be packaged into artifacts
+  # Identify the list folder that needs to be packaged into an artifact
   setup:
     runs-on: ubuntu-latest
     outputs:
-      dirs: ${{ steps.set-dirs.outputs.dirs }}
-      changes: ${{ steps.files.outputs.all }}
+      create_artifact: ${{ steps.set-dir.outputs.create_artifact }}
+      path: ${{ steps.set-dir.outputs.path }}
     steps:
       - uses: actions/checkout@v2
       
@@ -28,10 +28,11 @@ jobs:
         with:
           format: 'csv'
     
-      - id: set-dirs
+      - id: set-dir
         name: Calculate directories to turn into artifacts
         run: |
           set -eux
+          echo '::set-output name=create_artifact::false'
           declare -a dirs=()
           for d in scripts/*/ ; do
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
@@ -49,12 +50,14 @@ jobs:
             echo "No changes to scripts directories."
             exit 0
           fi
-          echo "changedDir=${dirs[0]}" >> $GITHUB_ENV
+          echo '::set-output name=create_artifact::true'
+          echo '::set-output name=path::${dirs[0]}'
           
       - uses: actions/upload-artifact@v3
+        if: ${{ steps.set-dir.outputs.create_artifact }}
         with:
           name: "zipfilefordbas"
-          path: ${{ env.changedDir }}
+          path: ${{ steps.set-dir.outputs.path }}
           
 
       
