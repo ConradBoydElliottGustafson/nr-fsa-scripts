@@ -15,8 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       dirs: ${{ steps.set-dirs.outputs.dirs }}
+      changes: ${{ steps.files.outputs.all }}
     steps:
       - uses: actions/checkout@v2
+      
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
     
       - id: set-dirs
         name: Calculate directories to turn into artifacts
@@ -40,7 +46,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      
+      # reference the changes with this variable
+      # 
+      
       - uses: actions/upload-artifact@v3
+        if: ${{ contains(needs.setup.outputs.changes, matrix.dir) }}
         with:
           path: ${{ matrix.dir }} 
