@@ -27,6 +27,7 @@ jobs:
       - id: set-dirs
         name: Calculate directories to turn into artifacts
         run: |
+          set -eux
           declare -a dirs
           for d in scripts/*/ ; do
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
