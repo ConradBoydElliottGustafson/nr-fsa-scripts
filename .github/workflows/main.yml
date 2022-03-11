@@ -34,26 +34,23 @@ jobs:
                 dirs+=("$d")
             fi
           done
-          # if more than 1 folder has changed, fail the pipeline? ( || exit 1 )
-          dirs_json=$(printf '%s\n' "${dirs[@]}" | jq -R . | jq -s . | tr -d '\r\n')
-          echo "dirs_json: ${dirs_json}"
-          echo "::set-output name=dirs::${dirs_json}"
+          numDirs=${#dirs[@]}
+          if [ numDirs -gt 1 ];
+          then
+            echo "You may not change more than 1 directory in a single PR. This one has ${numDirs} directory changes."
+            exit 1
+          fi
+          if [ numDirs -eq 0 ];
+          then
+            echo "No changes to scripts directories."
+            exit 0
+          fi
           
-  artifacts:
-    needs: [ setup ]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dir: ${{fromJson(needs.setup.outputs.dirs)}}
-
-    steps:
-      - uses: actions/checkout@v2
-      
-      # reference the changes with this variable
-      # 
-      
       - uses: actions/upload-artifact@v3
-        if: ${{ contains(needs.setup.outputs.changes, matrix.dir) }}
         with:
-          name: ${{ matrix.dir }} 
-          path: ${{ matrix.dir }} 
+          name: "zipfilefordbas"
+          path: ${dirs[0]}
+          
+
+      
+
