@@ -31,7 +31,6 @@ jobs:
         name: Calculate directories to turn into artifacts
         run: |
           set -eux
-          echo "::set-output name=create_artifact::false"
           echo "::set-output name=path::scripts"
           declare -a dirs=()
           for d in scripts/*/ ; do
@@ -45,18 +44,10 @@ jobs:
             echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directory changes."
             exit 1
           fi
-          if [ ${#dirs[@]} -eq 0 ];
-          then
-            echo "No changes to scripts directories."
-            exit 0
-          fi
-          echo "::set-output name=create_artifact::true"
           echo "::set-output name=path::${dirs[0]}"
-          echo "create_artifact: ${{ steps.set-dir.outputs.create_artifact }}"
-          echo "path: ${{ steps.set-dir.outputs.path }}"
           
       - uses: actions/upload-artifact@v3
-        if: ${{ steps.set-dir.outputs.create_artifact }}
+        if: ${{ success() }}
         with:
           name: "zipfilefordbas"
           path: ${{ steps.set-dir.outputs.path }}
