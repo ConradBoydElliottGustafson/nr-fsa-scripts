@@ -34,9 +34,10 @@ jobs:
           declare -a dirs=()
           echo "steps.files.outputs.all: ${{ steps.files.outputs.all }}"
           for d in scripts/*/ ; do
+            echo "evaluating a directory: ${d}"
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
             then
-                dirs+=("$d")
+                dirs+=("${d}")
             fi
           done
           echo "dirs[@]: ${dirs[@]}"
