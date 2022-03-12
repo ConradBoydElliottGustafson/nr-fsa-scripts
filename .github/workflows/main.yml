@@ -37,6 +37,7 @@ jobs:
             echo "evaluating a directory: ${d}"
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
             then
+                echo "adding a directory: ${d}"
                 dirs+=("${d}")
             fi
           done
