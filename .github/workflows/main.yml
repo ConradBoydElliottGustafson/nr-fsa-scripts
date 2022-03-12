@@ -32,6 +32,7 @@ jobs:
         run: |
           echo "::set-output name=path::scripts"
           declare -a dirs=()
+          echo "steps.files.outputs.all: ${{ steps.files.outputs.all }}"
           for d in scripts/*/ ; do
             if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
             then
