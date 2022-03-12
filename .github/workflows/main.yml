@@ -44,6 +44,7 @@ jobs:
             exit 1
           fi
           echo "::set-output name=path::${dirs[0]}"
+          echo "dirs[0]" ${dirs[0]}"
           
       - uses: actions/upload-artifact@v3
         if: ${{ success() }}
