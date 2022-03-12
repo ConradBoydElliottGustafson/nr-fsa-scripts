@@ -9,9 +9,9 @@ for d in scripts/*/ ; do
     dirs+=("$d")
 # fi
 done
-# if [ ${#dirs[@]} -gt 1 ];
-# then
-# echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directories with changes."
-# exit 1
-# fi
+if [ ${#dirs[@]} -gt 1 ];
+then
+echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directories with changes."
+exit 1
+fi
 echo "::set-output name=path::${dirs[0]}"
