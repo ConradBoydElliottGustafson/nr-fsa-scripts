@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -eux
 echo "::set-output name=path::scripts"
 declare -a dirs=()
 for d in scripts/*/ ; do
-# if [ ${d} == *"${{ steps.files.outputs.all }}"* ];
-# then
-    dirs+=("$d")
-# fi
+    echo "evaluating a directory: ${d}"
+    if [[ ".github/workflows/main.yml,scripts/change1/file1.txt,scripts/change1/file2.txt,test.sh" =~ $d ]];
+    then
+        dirs+=("$d")
+    fi
 done
 if [ ${#dirs[@]} -gt 15 ];
 then
