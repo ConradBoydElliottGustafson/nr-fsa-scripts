@@ -38,11 +38,19 @@ jobs:
                 dirs+=("$d")
             fi
           done
+          echo "dirs[@]: ${dirs[@]}"
+          echo "${#dirs[@]}: ${#dirs[@]}"
           if [ ${#dirs[@]} -gt 1 ];
           then
             echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directories with changes."
             exit 1
           fi
+          if [ ${#dirs[@]} -eq 0 ];
+          then
+            echo "This action should not run when there are no changes under the scripts directory (but it did)"
+            exit 1
+          fi
+          
           echo "::set-output name=path::${dirs[0]}"
           echo "dirs[0]: ${dirs[0]}"
           
