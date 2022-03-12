@@ -30,32 +30,20 @@ jobs:
       - id: set-dir
         name: Calculate directories to turn into artifacts
         run: |
-          echo "::set-output name=path::scripts"
           declare -a dirs=()
-          echo "steps.files.outputs.all: ${{ steps.files.outputs.all }}"
           for d in scripts/*/ ; do
-            echo "evaluating a directory: ${d}"
             if [[ ${{ steps.files.outputs.all }} =~ $d ]];
             then
-                echo "adding a directory: ${d}"
                 dirs+=("${d}")
             fi
           done
-          echo "dirs[@]: ${dirs[@]}"
-          echo "${#dirs[@]}: ${#dirs[@]}"
           if [ ${#dirs[@]} -gt 1 ];
           then
             echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directories with changes."
             exit 1
           fi
-          if [ ${#dirs[@]} -eq 0 ];
-          then
-            echo "This action should not run when there are no changes under the scripts directory (but it did)"
-            exit 1
-          fi
-          
           echo "::set-output name=path::${dirs[0]}"
-          echo "dirs[0]: ${dirs[0]}"
+
           
       - uses: actions/upload-artifact@v3
         if: ${{ success() }}
