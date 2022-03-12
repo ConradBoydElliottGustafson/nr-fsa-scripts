@@ -44,7 +44,7 @@ jobs:
             echo "You may not change more than 1 directory in a single PR. This one has ${#dirs[@]} directories with changes."
             exit 1
           fi
-          echo "::set-output name=path::${dirs[0]}"
+          echo "::set-output name=path::${dirs}"
           
       - uses: actions/upload-artifact@v3
         if: ${{ success() }}
