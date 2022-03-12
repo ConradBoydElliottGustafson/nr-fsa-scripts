@@ -1,4 +1,4 @@
-name: dba_artifacts
+name: dba_artifact
 
 on:
   push:
@@ -43,8 +43,7 @@ jobs:
             exit 1
           fi
           echo "::set-output name=path::${dirs[0]}"
-
-          
+      
       - uses: actions/upload-artifact@v3
         if: ${{ success() }}
         with:
