@@ -30,7 +30,6 @@ jobs:
       - id: set-dir
         name: Calculate directories to turn into artifacts
         run: |
-          set -eux
           echo "::set-output name=path::scripts"
           declare -a dirs=()
           for d in scripts/*/ ; do
